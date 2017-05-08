@@ -8,6 +8,9 @@ class SearchBar extends React.Component {
         super(props);
 
         this.state = { searchTerm: '' };
+
+        this.onInputChange = this.onInputChange.bind(this);
+        this.onFormSubmit = this.onFormSubmit.bind(this);
     }
 
     onInputChange (event) {
@@ -19,7 +22,8 @@ class SearchBar extends React.Component {
     onFormSubmit (event) {
         event.preventDefault();
 
-
+        this.props.fetchWeather(this.state.searchTerm);
+        this.setState({ searchTerm: '' })
     }
 
     render () {
@@ -29,7 +33,7 @@ class SearchBar extends React.Component {
                     placeholder = "Search city for forecast"
                     className = "form-control"
                     value = {this.state.searchTerm}
-                    onChange = {() => this.onInputChange}
+                    onChange = {this.onInputChange}
                 />
                 <span className = "input-group-btn">
                     <button type = "submit" className = "btn btn-secondary">Submit</button>
@@ -47,4 +51,4 @@ function mapStateToProps () {
     return null;
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect(null, mapDispatchToProps)(SearchBar);
